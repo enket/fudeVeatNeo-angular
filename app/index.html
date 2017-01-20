@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="fudeVeatNeoApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>Title</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="assets/css/app.css"/>
+    <link rel="stylesheet" href="angular_components/app.animations.css"/>
+
+    <!--  libraries -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular.uuid2/dist/angular-uuid2.js"></script>
+    <script src="bower_components/qrcode-generator/js/qrcode.js"></script>
+    <script src="bower_components/angular-qrcode/angular-qrcode.js"></script>
+    <script src="socket.io/socket.io.js"></script>
+
+    <!-- main modules -->
+    <script src="angular_components/app.module.js"></script>
+    <script src="angular_components/app.config.js"></script>
+    <script src="angular_components/app.animations.js"></script>
+
+    <!-- header and footer -->
+    <script src="angular_components/core/art/art.module.js"></script>
+    <script src="angular_components/core/art/art.service.js"></script>
+    <script src="angular_components/core/socketio/socketio.module.js"></script>
+    <script src="angular_components/core/socketio/socketio.service.js"></script>
+    <script src="angular_components/core/core.module.js"></script>
+    <script src="angular_components/alertList/alertList.module.js"></script>
+    <script src="angular_components/alertList/alertList.value.js"></script>
+    <script src="angular_components/alertList/alertList.components.js"></script>
+    <script src="angular_components/logoHeader/logoHeader.module.js"></script>
+    <script src="angular_components/logoHeader/logoHeader.value.js"></script>
+    <script src="angular_components/logoHeader/logoHeader.components.js"></script>
+    <script src="angular_components/homeSelector/homeSelector.module.js"></script>
+    <script src="angular_components/homeSelector/homeSelector.components.js"></script>
+    <script src="angular_components/debugLinks/debugLinks.module.js"></script>
+    <script src="angular_components/debugLinks/debugLinks.components.js"></script>
+
+    <!-- canvas components -->
+    <script src="angular_components/canvas/sharedCanvas.module.js"></script>
+    <script src="angular_components/canvas/sharedCanvas.service.js"></script>
+    <script src="angular_components/canvas/canvasDrawing/canvasDrawing.module.js"></script>
+    <script src="angular_components/canvas/canvasDrawing/canvasDrawing.components.js"></script>
+    <script src="angular_components/canvas/canvasNew/canvasNew.module.js"></script>
+    <script src="angular_components/canvas/canvasNew/canvasNew.components.js"></script>
+    <script src="angular_components/canvas/canvasNewWait/canvasNewWait.module.js"></script>
+    <script src="angular_components/canvas/canvasNewWait/canvasNewWait.components.js"></script>
+    <script src="angular_components/canvas/canvasJoin/canvasJoin.module.js"></script>
+    <script src="angular_components/canvas/canvasJoin/canvasJoin.components.js"></script>
+    <script src="angular_components/canvas/canvasJoinWait/canvasJoinWait.module.js"></script>
+    <script src="angular_components/canvas/canvasJoinWait/canvasJoinWait.components.js"></script>
+
+    <!-- arts components -->
+    <script src="angular_components/arts/artList/artList.module.js"></script>
+    <script src="angular_components/arts/artList/artList.components.js"></script>
+    <script src="angular_components/arts/artDetail/artDetail.module.js"></script>
+    <script src="angular_components/arts/artDetail/artDetail.components.js"></script>
+    <script src="angular_components/arts/artNew/artNew.module.js"></script>
+    <script src="angular_components/arts/artNew/artNew.components.js"></script>
+</head>
+
+<body>
+<!--<div class="bg-dim bg-dim-active"></div>-->
+<logo-header></logo-header>
+<div class="view-container">
+    <div ng-view class="view-frame"></div>
+</div>
+<alert-list></alert-list>
+
+</body>
+</html>

@@ -1,0 +1,250 @@
+:root {
+    --transision-time-main: 200ms;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none;
+}
+
+@font-face {
+    font-family: 'Open Sans Light';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Open Sans Light'), local('OpenSans-Light'), url(../fonts/openSans300.woff2) format('woff2');
+}
+
+body {
+    background-color: transparent;
+}
+
+.container-content {
+    height: 100vh;
+    padding: 80px 0px 15px;
+}
+
+.container-list {
+    height: 100%;
+    overflow: auto;
+}
+
+div.bg-dim {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+div.bg-dim-active {
+    background-color: rgba(0, 0, 0, 0.1)
+}
+
+video#bgvid {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    background: url('../img/bgVideoCover.jpg') no-repeat;
+    background-size: cover;
+    transition: 1s opacity;
+}
+
+canvas-drawing > canvas {
+    position: absolute;
+    top: 0;
+}
+
+canvas.canvas-background {
+    z-index: 1;
+    border: 5px solid #E38692;
+    background-image: url("../img/bg.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+canvas.canvas-main {
+    z-index: 2;
+}
+
+canvas.canvas-overlay {
+    z-index: 3;
+}
+
+.navbar-default {
+    background-color: rgba(0, 0, 0, 0);
+    border-color: rgba(0, 0, 0, 0);
+    margin: 15px;
+}
+
+.navbar-glyphicon {
+    height: 50px;
+    padding: 15px 15px;
+    font-size: 18px;
+    line-height: 20px;
+}
+
+.nav-tabs > li {
+    width: 50%;
+}
+
+.nav-tabs > li > a {
+    display: block;
+    text-align: center;
+    font-size: 23px;
+}
+
+.is-white {
+    color: #fff;
+}
+
+.locatior {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 37px;
+}
+
+div.container-toplogo {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 15px;
+    text-align: center;
+    margin: auto;
+    z-index: 100;
+}
+
+div.container-toplogo.is-title {
+    top: calc(50% - 170px);
+}
+
+svg.top-logo {
+    position: relative;
+    height: 50px;
+    fill: #333;
+}
+
+svg.top-logo.is-title {
+    height: 150px;
+    fill: #fff;
+}
+
+.navbar-toggle {
+    z-index: 2;
+}
+
+.navbar-right {
+    margin-right: 0px;
+}
+
+.glyphicon-top {
+    font-size: 25px;
+    margin: 15px;
+}
+
+.container-button {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 50%;
+    text-align: center;
+    margin: auto;
+}
+
+.btn-top {
+    font-family: 'Open Sans Light';
+    font-size: 24px;
+    background-color: transparent;
+    color: #fff;
+    text-transform: uppercase;
+    margin: 30px 40px;
+    padding: 5px;
+    width: 130px;
+    height: 120px;
+    transition: all var(--transision-time-main) 0s ease;
+}
+
+.btn-top-svg {
+    display: block;
+    background-color: transparent;
+    width: 50px;
+    height: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
+
+.btn-top circle,
+.btn-top path,
+.btn-top line,
+.btn-top polyline {
+    stroke: rgba(255, 255, 255, 1);
+    stroke-width: 2px;
+    transition: stroke var(--transision-time-main) ease 0s;
+}
+
+.btn-top:hover circle,
+.btn-top:hover path,
+.btn-top:hover line,
+.btn-top:hover polyline {
+    stroke: rgba(255, 255, 255, 0.5);
+}
+
+.btn-top:hover {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.through-touch {
+    pointer-events: none;
+}
+
+.touch-enable {
+    pointer-events: auto;
+}
+
+.container-alert {
+    position: fixed;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 500;
+}
+
+.alert {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.row {
+    margin: 10px 0px;
+}
+
+.container-title {
+    background-image: url("../img/2017-01-16.png");
+    background-size: cover;
+}
+
+.btn-bottom-big {
+    background-color: transparent;
+    border: 2px solid #333;
+    color: #333;
+    line-height: 50px;
+    text-transform: uppercase;
+    width: 100%;
+}
+
+.btn-bottom-big:hover {
+    background-color: rgba(0, 0, 0, .2);
+}

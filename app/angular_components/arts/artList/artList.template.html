@@ -1,0 +1,17 @@
+<div class="container-content">
+    <div class="container container-list">
+        <div class="row"
+             ng-repeat="art in arts">
+            <div class="col-md-7">
+                <a ng-href="#!/arts/{{ art._id }}">
+                    <img class="img-responsive"
+                         src="angular_components/arts/data/325a8aab-76a3-49c4-bd52-c7fcc4175f09.png">
+                </a>
+            </div>
+            <div class="col-md-5">
+                <div>title : {{ art.title }}</div>
+                <div>description : {{ art.description }}</div>
+            </div>
+        </div>
+    </div>
+</div>

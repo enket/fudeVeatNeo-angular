@@ -1,0 +1,21 @@
+{
+  "name": "angular-seed",
+  "description": "A starter project for AngularJS",
+  "version": "0.0.0",
+  "homepage": "https://github.com/angular/angular-seed",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "1.5.x",
+    "angular-loader": "~1.5.0",
+    "angular-animate": "1.5.x",
+    "angular-mocks": "1.5.x",
+    "angular-resource": "1.5.x",
+    "angular-route": "1.5.x",
+    "bootstrap": "3.3.x",
+    "jquery": "2.2.x",
+    "angular.uuid2": "angular-uuid2#*",
+    "angular-qrcode": "monospaced/angular-qrcode#^6.2.1",
+    "qrcode-generator": "monospaced/qrcode-generator#^0.1.0"
+  }
+}

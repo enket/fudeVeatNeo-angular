@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="bower_components/angular/angular.js"></script>
+    <script type="text/javascript">
+        var app = angular.module('calcMethod', []);
+
+        app.controller('calcMethodController', ['$scope', '$document', function ($scope, $document) {
+            $scope.excuteTime = 'not yet';
+
+            $scope.targetCanvasElem = angular.element(document.querySelector('#targetCanvas'));
+            $scope.ctx = $scope.targetCanvasElem[0].getContext('2d');
+            $scope.brushImg = new Image();
+            $scope.brushImg.src = 'assets/img/brush.png';
+
+            $scope.executeMethod = function () {
+                var times = 60000;
+                var startTime = new Date();
+
+                for (var i = 0; i < times; i += 1) {
+                    $scope.ctx.drawImage($scope.brushImg, 600 / times * i, 400 / times * i, 200 / times * i, 200 / times * i);
+                }
+
+                var endTime = new Date();
+
+                $scope.excuteTime = times + 'times: ' + (endTime - startTime) + 'ms' + '\n100px per frame: ' + ((endTime - startTime) * (100 / times)) + 'ms';
+            }
+        }]);
+    </script>
+</head>
+<body ng-app="calcMethod" ng-controller="calcMethodController">
+<canvas width="600px" height="400px" id="targetCanvas"></canvas>
+<div>{{ excuteTime }}</div>
+<button ng-click="executeMethod()">excute</button>
+</body>
+</html>

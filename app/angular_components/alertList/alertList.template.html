@@ -1,0 +1,10 @@
+<div class="container-alert">
+    <div ng-repeat="alert in $ctrl.alerts">
+        <div class="alert fade in" ng-class="alert.type" role="alert">
+            <button type="button" class="close" aria-label="Close">
+                <span aria-hidden="true" ng-click="$ctrl.alerts.splice($index,1)">&times;</span>
+            </button>
+            <strong>{{ alert.strong }}</strong>{{ alert.text }}
+        </div>
+    </div>
+</div>

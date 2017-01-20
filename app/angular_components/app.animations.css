@@ -1,0 +1,48 @@
+/* slide in from the bottom */
+@keyframes slideOutLeft {
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+/* slide in from the right */
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes dimIn {
+    from {
+
+    }
+}
+
+.view-frame {
+    position: fixed;
+    overflow: scroll;
+    width: 100vw;
+    height: 100vh;
+}
+
+.ng-enter {
+    z-index: 9999;
+}
+
+.ng-leave {
+    z-index: 1;
+}
+
+/* page specific animations ------------------------ */
+
+/* about ------------------------ */
+.view-frame.ng-enter {
+    animation: slideInRight 0.5s both cubic-bezier(.13, .64, .15, .99);
+}
+
+.view-frame.ng-leave {
+    animation: slideOutLeft 0.5s both cubic-bezier(.13, .64, .15, .99);
+}
