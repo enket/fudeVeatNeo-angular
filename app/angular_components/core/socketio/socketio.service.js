@@ -23,6 +23,9 @@ angular.module('core.socketio').factory('socket', function ($rootScope) {
                     }
                 });
             })
+        },
+        destroy: function () {
+            socket.removeAllListeners();
         }
     };
 });

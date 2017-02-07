@@ -55,6 +55,10 @@ angular.module('canvasDrawing').component('canvasDrawing', {
                 }
             };
 
+            this.$onDestroy = function () {
+                socket.destroy();
+            };
+
             $scope.setParameters = function () {
                 $scope.canvasRatio = $scope.CANVAS_STD_WIDTH / $scope.CANVAS_STD_HEIGHT;
                 $scope.startCanvasId = angular.element(document.querySelector('#startCanvas'));
