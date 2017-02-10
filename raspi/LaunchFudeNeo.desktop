@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application                          # 上述のタイプを指定します
+Version=2.0                               # ファイルが準拠しているデスクトップエントリ仕様のバージョン
+Name=FudeVeatNeo v2.0                     # アプリケーションの名前
+Comment=Virtual Performance calligraphy tool # コメントはツールチップとして使われます
+Path=/home/pi/fudeVeatNeo-angular         # 実行ファイルが存在するフォルダのパス
+Exec=launchFudeNeo.sh                     # アプリケーションの実行可能ファイル
+Icon=icon.png                             # エントリを表示するときに使われるアイコンの名前
+Terminal=false                            # アプリケーションをターミナルで実行する必要があるかどうかを記述
+Categories=Education;                     # エントリを表示するカテゴリを記述
