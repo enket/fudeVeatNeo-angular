@@ -16,6 +16,7 @@ body::-webkit-scrollbar {
 
 body {
     background-color: transparent;
+    user-select: none;
 }
 
 .container-content {
