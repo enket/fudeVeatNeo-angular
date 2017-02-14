@@ -1,4 +1,5 @@
 #!/bin/sh
 
-cd /home/pi/fudeVeatNeo-angular/
+echo "cd /home/pi/fudeVeatNeo-angular/"
+cd /home/pi/fudeVeatNeo-angular/ && echo "sucsess"
 git pull
