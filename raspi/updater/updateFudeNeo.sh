@@ -5,4 +5,4 @@ cd /home/pi/fudeVeatNeo-angular/ && echo "sucsess"
 
 echo "git pull"
 git pull \
-$$ mv raspi/launcher/launchFudeNeo.desktop /home/pi/Desktop/
+$$ cp raspi/launcher/launchFudeNeo.desktop /home/pi/Desktop/

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=FudeVeatNeo Updater
+Version=1.0
+Comment=Update FudeVeatNeo
+Exec=/home/pi/fudeVeatNeo-angular/raspi/updater/updateFudeNeo.sh
+Icon=/home/pi/fudeVeatNeo-angular/raspi/icon/updateFudeNeoIcon@512px.png
+Terminal=false
+Type=Application
+Categories=Education
