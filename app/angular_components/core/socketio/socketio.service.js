@@ -24,8 +24,11 @@ angular.module('core.socketio').factory('socket', function ($rootScope) {
                 });
             })
         },
+        connect: function () {
+            socket.connect();
+        },
         destroy: function () {
-            socket.removeAllListeners();
+            socket.disconnect();
         }
     };
 });

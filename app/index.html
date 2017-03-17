@@ -4,17 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <title>Title</title>
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
+    <!--<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>-->
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
     <link rel="stylesheet" href="assets/css/app.css"/>
+    <link rel="stylesheet" href="assets/css/materialIcon.css">
     <link rel="stylesheet" href="angular_components/app.animations.css"/>
 
     <!--  libraries -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="http://192.168.30.21:4000/target/target-script-min.js#anonymous"></script>
+    <!--<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>-->
     <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-material/angular-material.js"></script>
+    <script src="bower_components/angulargrid/angulargrid.js"></script>
     <script src="bower_components/angular.uuid2/dist/angular-uuid2.js"></script>
     <script src="bower_components/qrcode-generator/js/qrcode.js"></script>
     <script src="bower_components/angular-qrcode/angular-qrcode.js"></script>
@@ -26,8 +32,13 @@
     <script src="angular_components/app.animations.js"></script>
 
     <!-- header and footer -->
+    <script src="angular_components/mainFrame/mainFrame.module.js"></script>
+    <script src="angular_components/mainFrame/mainFrame.components.js"></script>
+    <script src="angular_components/mainFrame/mainFrame.service.js"></script>
     <script src="angular_components/core/art/art.module.js"></script>
     <script src="angular_components/core/art/art.service.js"></script>
+    <script src="angular_components/core/canvas/canvas.module.js"></script>
+    <script src="angular_components/core/canvas/canvas.service.js"></script>
     <script src="angular_components/core/socketio/socketio.module.js"></script>
     <script src="angular_components/core/socketio/socketio.service.js"></script>
     <script src="angular_components/core/core.module.js"></script>
@@ -66,12 +77,14 @@
 </head>
 
 <body>
-<!--<div class="bg-dim bg-dim-active"></div>-->
-<logo-header></logo-header>
-<div class="view-container">
-    <div ng-view class="view-frame"></div>
-</div>
-<alert-list></alert-list>
+
+
+<main-frame layout="column" layout-fill ng-cloak></main-frame>
+
+<!--<div flex layout="column" layout-align="start stretch">-->
+<!--<div ng-view flex class="fade"></div>-->
+<!--</div>-->
+
 
 </body>
 </html>

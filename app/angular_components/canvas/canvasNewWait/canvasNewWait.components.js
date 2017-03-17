@@ -5,26 +5,28 @@
 
 angular.module('canvasNewWait').component('canvasNewWait', {
     templateUrl: 'angular_components/canvas/canvasNewWait/canvasNewWait.template.html',
-    controller: ['$routeParams', '$scope', '$location', 'socket', 'Alerts', 'CurrentLocationStr', 'sharedCanvasObject'
-        , function ($routeParams, $scope, $location, socket, Alerts, CurrentLocationStr, sharedCanvasObject) {
-            $scope.sessionId = $routeParams.sessionId;
-
+    controller: ['$routeParams', '$scope', '$location', '$log', '$timeout', 'socket', 'Alerts', 'CurrentLocationStr', 'sharedCanvasObject'
+        , function ($routeParams, $scope, $location, $log, $timeout, socket, Alerts, CurrentLocationStr, sharedCanvasObject) {
+            $scope.leave = true;
             socket.on('continueToCanvas', function () {
-                $location.path('/canvas/drawing/' + $scope.sharedCanvasObject.uuid);
+                $scope.leave = false;
+                $timeout(function () {
+                    $location.path('/canvas/drawing/' + $scope.sharedCanvasObject.uuid)
+                }, 0);
             });
 
-            this.$onInit = function () {
-                $scope.sharedCanvasObject = sharedCanvasObject;
+            $scope.sharedCanvasObject = sharedCanvasObject;
 
-                Alerts.push({
-                    type: 'alert-info',
-                    strong: 'canvas/new/:sessionId',
-                    text: ' current sessionId is ' + $routeParams.sessionId
-                });
+            this.$onDestroy = function () {
+                $log.info("onDestroy canvasNewWait");
+                if ($scope.leave) {
+                    socket.emit('leaveRoom');
+                }
+                socket.emit('removeRoom');
+            };
 
-                CurrentLocationStr.title = 'Waiting to start';
-
-                socket.emit('joinRoom', {value: $scope.sharedCanvasObject.uuid});
+            $scope.continueToCanvas = function () {
+                socket.emit('continueToCanvas')
             }
         }]
 });

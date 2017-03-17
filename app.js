@@ -136,7 +136,7 @@ router.route('/arts')
             if (err)
                 res.send(err);
             res.json(arts);
-        }).select('-data');
+        }).select('-data').select('-img');
     });
 
 // /arts/:artId というルートを作成する．
@@ -163,12 +163,32 @@ router.route('/arts/:artId')
         });
     });
 
+// /canvases というルートを作成する．
+// ----------------------------------------------------
+router.route('/canvases')
+
+// 1人のユーザの情報を取得 (GET http://localhost:3000/api/users/:user_id)
+    .get(function (req, res) {
+        res.json(rooms);
+    });
+
+// /canvases/:canvasId というルートを作成する．
+// ----------------------------------------------------
+router.route('/canvases/:canvasId')
+
+// 1人のユーザの情報を取得 (GET http://localhost:3000/api/users/:user_id)
+    .get(function (req, res) {
+        res.json(rooms.filter(function (element, index, array) {
+            return ( element.uuid && element.uuid === req.params.canvasId );
+        })[0]);
+    });
+
 
 // ルーティング登録
 app.use('/api', router);
 
 var drawingData = [];
-var dateOffset;
+var rooms = [];
 
 io.sockets.on('connection', function (socket) {
     var room = {
@@ -180,28 +200,39 @@ io.sockets.on('connection', function (socket) {
     console.log('a user ' + socket.id + ' has connected');
 
     // enter to the room
+    socket.on('createRoom', function (data) {
+        room.id = data.value.uuid;
+        rooms.push(data.value);
+        console.log(rooms);
+        socket.join(room.id);
+        console.log('a user ' + socket.id + ' has created room : ' + room.id);
+    });
+
     socket.on('joinRoom', function (data) {
         room.id = data.value;
-        //room.data[socket.id] = [];
-        console.log(room);
         socket.join(room.id);
-        console.log('a user ' + socket.id + ' has joined to ' + room.id);
-        console.log(socket.adapter.rooms[room.id]);
-        i = 0;
-        if (socket.adapter.rooms[room.id].length == 3) {
-            setTimeout(function () {
-                io.sockets.in(room.id).emit('continueToCanvas');
-                dateOffset = Date.parse(new Date());
-            }, 1000);
-        }
+        console.log('a user ' + socket.id + ' has joind to room : ' + room.id);
+    });
+
+    socket.on('removeRoom', function () {
+        rooms = rooms.filter(function (element, index, array) {
+            return ( element.uuid && !(element.uuid === room.id) );
+        });
+        console.log('a user ' + socket.id + ' has removed room : ' + room.id + ' from list');
+    });
+
+    socket.on('leaveRoom', function () {
+        socket.leave(room.id);
+        console.log('a user ' + socket.id + ' has leaved from room : ' + room.id);
+    });
+
+    socket.on('continueToCanvas', function () {
+        io.sockets.in(room.id).emit('continueToCanvas');
     });
 
     // share drawing
     socket.on('drawInRoom', function (data) {
         socket.broadcast.to(room.id).emit('drawInRoom', data);
-        data.data[1].date = Date.parse(new Date()) - dateOffset;
-        data.data[1].i = i;
-        i = (i + 1) | 0;
         room.data.push(data.data[1]);
     });
 
@@ -212,18 +243,23 @@ io.sockets.on('connection', function (socket) {
         })
     });
 
-    socket.on('saveArt', function (data) {
+    socket.on('saveArt', function (data, imgData) {
         io.sockets.in(room.id).emit('commitData');
+        console.log(imgData);
 
         setTimeout(function () {
             // 新しいユーザのモデルを作成する．
             var art = new Art();
 
             // ユーザの各カラムの情報を取得する．
-            art.artId = data.artId;
+            art.artId = data.uuid;
             art.title = data.title;
             art.description = data.description;
+            art.height = data.height;
+            art.width = data.width;
+            art.img = imgData;
             art.data = drawingData;
+            drawingData = [];
 
             // ユーザ情報をセーブする．
             art.save(function (err) {
@@ -232,12 +268,12 @@ io.sockets.on('connection', function (socket) {
                 io.sockets.in(room.id).emit('saved');
             });
             console.log(room);
-        }, 1000);
+        }, 2000);
     });
 
     socket.on('disconnect', function () {
         console.log('user disconnected');
-        console.log(room);
+        console.log(room.id);
     })
 });
 

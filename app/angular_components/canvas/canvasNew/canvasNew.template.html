@@ -1,66 +1,141 @@
-<div class="container-content">
-    <div class="tab-wrap">
+<div layout="column" layout-fill>
+    <md-content>
+        <md-tabs md-dynamic-height md-border-bottom md-stretch-tabs="always">
+            <md-tab label="新規作成">
+                <md-content flex layout="column" class="md-padding">
+                    <img flex src="assets/img/bg.jpg">
+                    <br>
+                    <div flex layout="column">
+                        <form name="userForm">
 
-        <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" ng-class="{active: $route.current.activetab == 'new' }">
-                <a href="#!/canvas/new#new" aria-controls="new" role="tab" data-toggle="tab">
-                    <div class="glyphicon glyphicon-plus"></div>
-                </a>
-            </li>
-            <li role="presentation" ng-class="{active: $route.current.activetab == 'join' }">
-                <a href="#!/canvas/join#join" aria-controls="join" role="tab" data-toggle="tab">
-                    <div class="glyphicon glyphicon-log-in"></div>
-                </a>
-            </li>
-        </ul>
-        <div class="tab-bar"></div>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>タイトル</label>
+                                <input ng-model="sharedCanvasObject.title">
+                            </md-input-container>
 
-        <!-- Tab panes -->
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane" id="new" ng-class="{active: $route.current.activetab == 'new' }">
-                <div class="container">
-                    <div class="col-md-8">
-                        <div class="form-group form-group-lg">
-                            <label class="control-label" for="title">Title</label>
-                            <input type="text" class="form-control" id="title" ng-model="sharedCanvasObject.title">
-                        </div>
-                        <div class="form-group form-group-lg">
-                            <label for="description">Description</label>
-                            <input type="text" class="form-control" id="description"
-                                   ng-model="sharedCanvasObject.description">
-                        </div>
-                        <div class="form-group form-group-lg">
-                            <label for="people">People</label>
-                            <select class="form-control" id="people" ng-model="sharedCanvasObject.people">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="2">3</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group form-group-lg">
-                            <label class="control-label">Background</label>
-                            <img src="assets/img/bg.jpg" class="img-responsive" height="100px">
-                        </div>
-                    </div>
-                    <div>{{ sharedCanvasObject.uuid }}</div>
-                    <div class="btn btn-lg btn-bottom-big" ng-click="clickButton()">
-                        create
-                    </div>
-                </div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="join" ng-class="{active: $route.current.activetab == 'join' }">
-                <div class="container">
-                    <div class="btn btn-lg btn-bottom-big">
-                        <!--<a href="intent://scan/#Intent;scheme=zxing;package=com.google.zxing.client.android;end">-->
-                        <a ng-href="{{ qrHref }}">
-                            open qr code reader
-                        </a>
-                    </div>
-                </div>
-            </div>
+                            <md-input-container class="md-block">
+                                <label>説明</label>
+                                <textarea ng-model="sharedCanvasObject.description" md-maxlength="150" rows="2" md-select-on-focus></textarea>
+                            </md-input-container>
 
-        </div>
-    </div>
+                            <div layout-gt-xs="row">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>比率</label>
+                                    <md-select ng-model="ratio">
+                                        <md-option ng-repeat="ratio in ratios" ng-value="ratio.width / ratio.height">
+                                            <md-icon md-font-set="material-icons">stay_current_landscape</md-icon> {{ ratio.width }}:{{ ratio.height }}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+
+
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>倍率</label>
+                                    <md-select ng-model="expand">
+                                        <md-option ng-repeat="expand in expands" ng-value="expand">
+                                            x{{ expand }}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+
+                                <md-input-container class="md-block" flex-gt-xs>
+                                    <label>幅</label>
+                                    <input value="{{ calcCanvasWidth() }}" disabled>
+                                </md-input-container>
+
+                                <md-input-container class="md-block" flex-gt-xs>
+                                    <label>高さ</label>
+                                    <input type="number" ng-model="sharedCanvasObject.height" disabled>
+                                </md-input-container>
+                            </div>
+
+
+                        </form>
+                    </div>
+                    <md-button flex class="md-raised md-primary" href="#!/canvas/new/{{ sharedCanvasObject.uuid }}" ng-click="createRoom()">
+                        作成
+                    </md-button>
+                </md-content>
+            </md-tab>
+            <md-tab label="参加" ng-click="reloadCanvases()">
+                <md-content flex layout="column" class="md-padding">
+                    <md-list flex>
+                        <md-list-item flex class="md-3-line md-long-text" ng-repeat="canvas in canvases" href="#!/canvas/join/{{ canvas.uuid }}">
+                            <img ng-src="assets/img/avatar.png" class="md-avatar" alt="" />
+                            <div class="md-list-item-text" layout="column">
+                                <h3>{{ canvas.title }}</h3>
+                                <p>{{ canvas.description }}</p>
+                            </div>
+                        </md-list-item>
+                    </md-list>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-content>
 </div>
+<!--<div class="container-content">-->
+    <!--<div class="tab-wrap">-->
+
+        <!--<ul class="nav nav-tabs" role="tablist">-->
+            <!--<li role="presentation" ng-class="{active: $route.current.activetab == 'new' }">-->
+                <!--<a href="#!/canvas/new#new" aria-controls="new" role="tab" data-toggle="tab">-->
+                    <!--<div class="glyphicon glyphicon-plus"></div>-->
+                <!--</a>-->
+            <!--</li>-->
+            <!--<li role="presentation" ng-class="{active: $route.current.activetab == 'join' }">-->
+                <!--<a href="#!/canvas/join#join" aria-controls="join" role="tab" data-toggle="tab">-->
+                    <!--<div class="glyphicon glyphicon-log-in"></div>-->
+                <!--</a>-->
+            <!--</li>-->
+        <!--</ul>-->
+        <!--<div class="tab-bar"></div>-->
+
+        <!--&lt;!&ndash; Tab panes &ndash;&gt;-->
+        <!--<div class="tab-content">-->
+            <!--<div role="tabpanel" class="tab-pane" id="new" ng-class="{active: $route.current.activetab == 'new' }">-->
+                <!--<div class="container">-->
+                    <!--<div class="col-md-8">-->
+                        <!--<div class="form-group form-group-lg">-->
+                            <!--<label class="control-label" for="title">Title</label>-->
+                            <!--<input type="text" class="form-control" id="title" ng-model="sharedCanvasObject.title">-->
+                        <!--</div>-->
+                        <!--<div class="form-group form-group-lg">-->
+                            <!--<label for="description">Description</label>-->
+                            <!--<input type="text" class="form-control" id="description"-->
+                                   <!--ng-model="sharedCanvasObject.description">-->
+                        <!--</div>-->
+                        <!--<div class="form-group form-group-lg">-->
+                            <!--<label for="people">People</label>-->
+                            <!--<select class="form-control" id="people" ng-model="sharedCanvasObject.people">-->
+                                <!--<option value="1">1</option>-->
+                                <!--<option value="2">2</option>-->
+                                <!--<option value="2">3</option>-->
+                            <!--</select>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="col-md-4">-->
+                        <!--<div class="form-group form-group-lg">-->
+                            <!--<label class="control-label">Background</label>-->
+                            <!--<img src="assets/img/bg.jpg" class="img-responsive" height="100px">-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div>{{ sharedCanvasObject.uuid }}</div>-->
+                    <!--<div class="btn btn-lg btn-bottom-big" ng-click="clickButton()">-->
+                        <!--create-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div role="tabpanel" class="tab-pane" id="join" ng-class="{active: $route.current.activetab == 'join' }">-->
+                <!--<div class="container">-->
+                    <!--<div class="btn btn-lg btn-bottom-big">-->
+                        <!--&lt;!&ndash;<a href="intent://scan/#Intent;scheme=zxing;package=com.google.zxing.client.android;end">&ndash;&gt;-->
+                        <!--<a ng-href="{{ qrHref }}">-->
+                            <!--open qr code reader-->
+                        <!--</a>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->

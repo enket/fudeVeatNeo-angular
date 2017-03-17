@@ -5,19 +5,21 @@
 
 angular.module('canvasDrawing').component('canvasDrawing', {
     templateUrl: 'angular_components/canvas/canvasDrawing/canvasDrawing.template.html',
-    controller: ['$routeParams', '$document', '$log', '$scope', 'socket', 'uuid2', 'Alerts', 'sharedCanvasObject'
-        , function ($routeParams, $document, $log, $scope, socket, uuid2, Alerts, sharedCanvasObject) {
+    controller: ['$routeParams', '$document', '$log', '$scope', '$mdToast', 'socket', 'uuid2', 'Alerts', 'sharedCanvasObject', 'mainFrameObject'
+        , function ($routeParams, $document, $log, $scope, $mdToast, socket, uuid2, Alerts, sharedCanvasObject, mainFrameObject) {
             $scope.CANVAS_STD_WIDTH = 1500;
             $scope.CANVAS_STD_HEIGHT = 1000;
             $scope.CANVAS_STD_GLOBALALPHA = 0.5;
             $scope.SCROLL_COUNT = 6;
-            $scope.OLD_FACT = 0.6;
-            $scope.NEW_FACT = 0.4;
+            $scope.OLD_FACT = 0.7;
+            $scope.NEW_FACT = 0.3;
+            $scope.touchOffsetX = 0;
+            $scope.touchOffsetY = 0;
             $scope.brushImg = new Image();
             $scope.brushImg.src = 'assets/img/brush.png';
             $scope.brushImgGray = new Image();
             $scope.brushImgGray.src = 'assets/img/brush_gray186.png';
-
+            $scope.sharedCanvasObject = sharedCanvasObject;
 
 
             this.$onInit = function () {
@@ -28,7 +30,6 @@ angular.module('canvasDrawing').component('canvasDrawing', {
                 });
 
 
-
                 $scope.setParameters();
                 $scope.canvasOverlay = $scope.makeCanvas("canvas-overlay");
                 $scope.canvasMain = $scope.makeCanvas("canvas-main");
@@ -37,6 +38,12 @@ angular.module('canvasDrawing').component('canvasDrawing', {
                 $scope.canvasBgCtx = $scope.canvasBg[0].getContext('2d');
                 $scope.addTouchEvent($scope.canvasOverlay);
                 $scope.addMouseEvent($scope.canvasOverlay);
+
+                $('#main-content').scroll(function () {
+                    $log.info(this.scrollTop);
+                    $scope.touchOffsetX = this.scrollLeft;
+                    $scope.touchOffsetY = this.scrollTop;
+                });
 
                 $scope.sharedCanvasObject = sharedCanvasObject;
                 if ($scope.sharedCanvasObject.data.length) {
@@ -53,19 +60,26 @@ angular.module('canvasDrawing').component('canvasDrawing', {
                         }
                     }
                 }
+
+                $scope.mainFrameObject = mainFrameObject;
+                $scope.mainFrameObject.showSaveIcon = true;
             };
 
             this.$onDestroy = function () {
+                socket.emit('leaveRoom');
                 socket.destroy();
+                $('#main-content').off('scroll');
+                $('.canvas-overlay').remove();
+                $('.canvas-main').remove();
+                $('.canvas-background').remove();
+                $scope.mainFrameObject.showSaveIcon = false;
             };
 
             $scope.setParameters = function () {
-                $scope.canvasRatio = $scope.CANVAS_STD_WIDTH / $scope.CANVAS_STD_HEIGHT;
                 $scope.startCanvasId = angular.element(document.querySelector('#startCanvas'));
                 $scope.devicePixelRatio = window.devicePixelRatio;
-                $scope.screenHeight = window.parent.screen.height;
-                $scope.canvasWidth = $scope.screenHeight * $scope.canvasRatio;
-                $scope.canvasHeight = $scope.screenHeight;
+                $scope.canvasWidth = $scope.sharedCanvasObject.width;
+                $scope.canvasHeight = $scope.sharedCanvasObject.height - 66;
             };
 
             $scope.makeCanvas = function (name) {
@@ -130,6 +144,7 @@ angular.module('canvasDrawing').component('canvasDrawing', {
                     } else {
                         // このイベントによるデフォルトのスクロールを無効化
                         event.preventDefault();
+                        $log.info();
                     }
                     $log.debug(event);
                 });
@@ -158,14 +173,15 @@ angular.module('canvasDrawing').component('canvasDrawing', {
             };
 
             $scope.pushPoint = function (array, touch, isFirst) {
+                $log.log(touch.radiusX);
                 var x, y, rad, dist, angle, deltaRad;
                 var prevData, newData;
 
                 var newFact = $scope.NEW_FACT;
                 var oldFact = $scope.OLD_FACT;
 
-                var offsetX = touch.target.offsetParent.scrollLeft;
-                var offsetY = touch.target.offsetParent.scrollTop;
+                var offsetX = $scope.touchOffsetX;
+                var offsetY = $scope.touchOffsetY - 56;
 
                 if (isFirst) {
                     array.push({
@@ -210,59 +226,59 @@ angular.module('canvasDrawing').component('canvasDrawing', {
                 if (prev.x == undefined) {
                     return;
                 }
-                var OFFSET_SIZE = 27;
-                var COEF_SIZE = 1.56;
+                var a = 2.8471;
+                var b = -44.1466;
 
                 var x = prev.x;
                 var y = prev.y;
-                var size = prev.rad * COEF_SIZE;
+                var size = a * prev.rad + b;
+                var sizeCurrent = a * current.rad + b - size;
                 var angleSin = Math.sin(current.angle);
                 var angleCos = Math.cos(current.angle);
                 var delta;
                 var i = 0;
 
                 while (i < current.dist) {
-                    size = size + current.deltaRad * COEF_SIZE;
+                    size += sizeCurrent / current.dist;
                     if (size < 2) {
                         size = 2;
                     }
-                    delta = (45 - size - OFFSET_SIZE) / 2;
+                    delta = size / 2;
                     x = x + angleSin;
                     y = y + angleCos;
-                    $scope.canvasMainCtx.drawImage($scope.brushImg, x + delta, y + delta, size - OFFSET_SIZE, size - OFFSET_SIZE);
+                    $scope.canvasMainCtx.drawImage($scope.brushImg, x - delta, y - delta, size, size);
                     i = (i + 1) | 0;
                 }
             };
 
             $scope.drawBrushUnderlay = function (prev, current) {
-                $log.info(prev);
                 if (prev.x == undefined) {
                     return;
                 }
-                var OFFSET_SIZE = 27;
-                var COEF_SIZE = 1.56;
+                var a = 2.8471;
+                var b = -44.1466;
 
                 var x = prev.x;
                 var y = prev.y;
-                var size = prev.rad * COEF_SIZE;
+                var size = a * prev.rad + b;
+                var sizeCurrent = a * current.rad + b - size;
                 var angleSin = Math.sin(current.angle);
                 var angleCos = Math.cos(current.angle);
                 var delta;
                 var i = 0;
 
                 while (i < current.dist) {
-                    size = size + current.deltaRad * COEF_SIZE;
+                    size += sizeCurrent / current.dist;
                     if (size < 2) {
                         size = 2;
                     }
-                    delta = (45 - size - OFFSET_SIZE) / 2;
+                    delta = size / 2;
                     x = x + angleSin;
                     y = y + angleCos;
-                    $scope.canvasBgCtx.drawImage($scope.brushImgGray, x + delta, y + delta, size - OFFSET_SIZE, size - OFFSET_SIZE);
+                    $scope.canvasBgCtx.drawImage($scope.brushImg, x - delta, y - delta, size, size);
                     i = (i + 1) | 0;
                 }
             };
-
 
             socket.on('drawInRoom', function (data) {
                 $scope.drawBrush(data.data[0], data.data[1]);
@@ -273,11 +289,11 @@ angular.module('canvasDrawing').component('canvasDrawing', {
             });
 
             socket.on('saved', function () {
-                Alerts.push({
-                    type: 'alert-info',
-                    strong: '',
-                    text: 'This canvas has saved successfully ' + new Date()
-                });
+                $mdToast.show(
+                    $mdToast.simple()
+                        .textContent('作品は正常に保存されました！ｲｪｲ！')
+                        .position('bottom right')
+                );
             })
         }]
 });

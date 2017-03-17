@@ -1,7 +1,9 @@
-<div class="container-content" >
-    <div class="container text-center">
-        <qrcode version="5" error-correction-level="H" size="400"
-                data="{{ sessionId }}" href="{{ sessionId }}"></qrcode>
-        <div>{{ sessionId }}</div>
-    </div>
+<div layout="column">
+    <md-content flex layout="column" layout-align="center center">
+        <p>待機中...</p>
+        <p>現在のルーム内ユーザ数：</p>
+        <md-button flex class="md-raised md-primary" ng-click="continueToCanvas()">
+            開始
+        </md-button>
+    </md-content>
 </div>

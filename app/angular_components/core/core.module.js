@@ -5,5 +5,6 @@
 
 angular.module('core', [
     'core.art',
+    'core.canvas',
     'core.socketio'
 ]);

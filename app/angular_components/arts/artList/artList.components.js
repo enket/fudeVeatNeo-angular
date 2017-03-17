@@ -10,6 +10,8 @@ angular.module('artList').component('artList', {
 
         this.$onInit = function () {
             CurrentLocationStr.title = 'Art List';
-        }
+        };
+
+
     }]
 });

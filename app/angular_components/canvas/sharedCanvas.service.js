@@ -5,9 +5,10 @@
 
 angular.module('sharedCanvas').service('sharedCanvasObject', function () {
     var service = {
-        title: 'Unnamed title',
-        description: 'This is just a new canvas, yay!',
-        people: '2',
+        title: '名称未設定のタイトル',
+        description: 'この作品にはまだ説明がありません。ｲｪｲ!',
+        height: '',
+        width: '',
         uuid: '',
         data: []
     };

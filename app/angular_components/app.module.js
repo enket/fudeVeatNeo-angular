@@ -6,9 +6,12 @@
 angular.module('fudeVeatNeoApp',[
     'ngAnimate',
     'ngRoute',
+    'ngMaterial',
+    'angularGrid',
     'angularUUID2',
     'monospaced.qrcode',
     'core',
+    'mainFrame',
     'logoHeader',
     'homeSelector',
     'alertList',

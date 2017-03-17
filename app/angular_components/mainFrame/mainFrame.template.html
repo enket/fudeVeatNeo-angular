@@ -1,0 +1,64 @@
+<md-sidenav class="md-sidenav-left md-whiteframe-4dp" md-component-id="left">
+    <md-content layout-padding>
+        <md-list-item href="#!/debug-links" ng-click="toggleSidenav()">
+            <md-icon md-font-set="material-icons">bug_report</md-icon>
+            <p>Debug Link</p>
+        </md-list-item>
+        <md-divider></md-divider>
+        <md-list-item href="#!/debug-links" ng-click="toggleSidenav()">
+            <md-icon md-font-set="material-icons">bug_report</md-icon>
+            <p>Debug Link</p>
+        </md-list-item>
+        <md-list-item href="#!/debug-links" ng-click="toggleSidenav(); nothingHappens($event);">
+            <md-icon md-font-set="material-icons">settings</md-icon>
+            <p>設定</p>
+        </md-list-item>
+        <md-button ng-click="toggleSidenav()" class="md-primary">
+            Close Sidenav Right
+        </md-button>
+    </md-content>
+</md-sidenav>
+
+<md-toolbar>
+    <div class="md-toolbar-tools md-whiteframe-4dp">
+        <md-button class="md-icon-button" aria-label="Sidenav" ng-click="toggleSidenav()">
+            <md-icon md-font-set="material-icons">menu</md-icon>
+        </md-button>
+
+        <h2 flex layout="row" layout-align="center center">筆veatNEO v2</h2>
+
+        <md-button class="md-icon-button" aria-label="Save art" ng-click="saveArt($event)" ng-show="mainFrameObject.showSaveIcon">
+            <md-icon md-font-set="material-icons">save</md-icon>
+        </md-button>
+        <md-menu>
+            <md-button class="md-icon-button" aria-label="Open more interactions menu" ng-click="$mdMenu.open()">
+                <md-icon md-font-set="material-icons">more_vert</md-icon>
+            </md-button>
+            <md-menu-content width="4">
+                <md-menu-item>
+                    <md-button ng-click="toggleFullScreen()">
+                        <md-icon md-font-set="material-icons">fullscreen</md-icon>
+                        フルスクリーン切り替え
+                    </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button ng-click="">
+                        <md-icon md-font-set="material-icons">apps</md-icon>
+                        その他機能
+                    </md-button>
+                </md-menu-item>
+                <md-menu-divider></md-menu-divider>
+                <md-menu-item>
+                    <md-button ng-click="">
+                        <md-icon md-font-set="material-icons">delete</md-icon>
+                        全削除
+                    </md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </div>
+</md-toolbar>
+
+<md-content flex id="main-content">
+    <div ng-view class="fade"></div>
+</md-content>

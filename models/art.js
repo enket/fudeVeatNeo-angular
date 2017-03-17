@@ -6,8 +6,11 @@ var Schema = mongoose.Schema;
 
 var ArtSchema = new Schema({
     artId : {type: String, required: true, unique: true},
-    title: String,
-    description: String,
+    title: {type: String, required: true, unique: false},
+    description: {type: String, required: true, unique: false},
+    height: {type: Number, required: true, unique: false},
+    width: {type: Number, required: true, unique: false},
+    img: {type: String, required: true, unique: false},
     data: [{
         userId: String,
         data: [{
@@ -17,8 +20,7 @@ var ArtSchema = new Schema({
             rad: Number,
             deltaRad: Number,
             dist: Number,
-            angle: Number,
-            date: Number
+            angle: Number
         }]
     }],
     likes: Number

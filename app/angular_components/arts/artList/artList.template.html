@@ -1,17 +1,93 @@
-<div class="container-content">
-    <div class="container container-list">
-        <div class="row"
-             ng-repeat="art in arts">
-            <div class="col-md-7">
-                <a ng-href="#!/arts/{{ art._id }}">
-                    <img class="img-responsive"
-                         src="angular_components/arts/data/325a8aab-76a3-49c4-bd52-c7fcc4175f09.png">
-                </a>
-            </div>
-            <div class="col-md-5">
-                <div>title : {{ art.title }}</div>
-                <div>description : {{ art.description }}</div>
+<div layout="column" layout-fill>
+    <md-content>
+        <section layout="row" layout-align="end center" layout-wrap>
+            <md-menu>
+                <md-button aria-label="Open more interactions menu" ng-click="$mdOpenMenu()">
+                    <md-icon md-font-set="material-icons">filter_list</md-icon>
+                    フィルタ
+                </md-button>
+                <md-menu-content width="4">
+                    <md-menu-item>
+                        <md-button ng-click="">
+                            <md-icon md-font-set="material-icons">fullscreen</md-icon>
+                            フルスクリーン切り替え
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button ng-click="">
+                            <md-icon md-font-set="material-icons">apps</md-icon>
+                            その他機能
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-divider></md-menu-divider>
+                    <md-menu-item>
+                        <md-button ng-click="">
+                            <md-icon md-font-set="material-icons">delete</md-icon>
+                            全削除
+                        </md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+            <md-menu>
+                <md-button aria-label="Open more interactions menu" ng-click="$mdOpenMenu()">
+                    <md-icon md-font-set="material-icons">sort</md-icon>
+                    ソート
+                </md-button>
+                <md-menu-content width="4">
+                    <md-menu-item>
+                        <md-button ng-click="">
+                            <md-icon md-font-set="material-icons">fullscreen</md-icon>
+                            フルスクリーン切り替え
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button ng-click="">
+                            <md-icon md-font-set="material-icons">apps</md-icon>
+                            その他機能
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-divider></md-menu-divider>
+                    <md-menu-item>
+                        <md-button ng-click="">
+                            <md-icon md-font-set="material-icons">delete</md-icon>
+                            全削除
+                        </md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+        </section>
+    </md-content>
+
+    <md-divider></md-divider>
+
+    <md-content flex>
+        <div
+                class="cards-wrap"
+                angular-grid="vm.shots"
+                grid-width="300"
+                gutter-size="12"
+                angular-grid-id="shots"
+                scroll-container="'#content-scroller'"
+        >
+            <!--<div class="card" ng-repeat="i in ['erondu', 'mikael', 'dustinlee', 'ugmonk', 'morgansessions', 'florianklauer', 'firmbee', 'jaymantri', 'matthewhenry']">-->
+            <!--<img src="assets/img/bg.jpg">-->
+            <!--<div class="inside">-->
+            <!--<h3>title</h3>-->
+            <!--<div class="description">description</div>-->
+            <!--</div>-->
+            <!--</div>-->
+            <div class="card" ng-repeat="art in arts">
+                <img ng-src="assets/img/bg.jpg">
+                <div class="inside">
+                    <h3>{{ art.title }}</h3>
+                    <div class="description">{{ art.description }}</div>
+                </div>
             </div>
         </div>
-    </div>
+    </md-content>
 </div>
+
+<md-button class="md-fab md-fab-bottom-right" href="#!/canvas/new">
+    <md-icon md-font-set="material-icons">add</md-icon>
+</md-button>
+

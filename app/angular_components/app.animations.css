@@ -1,48 +1,34 @@
-/* slide in from the bottom */
-@keyframes slideOutLeft {
-    to {
-        transform: translateX(-100%);
-    }
+
+
+/*.view-frame {*/
+    /*position: fixed;*/
+    /*overflow: scroll;*/
+    /*width: 100vw;*/
+    /*height: 100vh;*/
+/*}*/
+
+.fade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    opacity: 1;
 }
-
-/* slide in from the right */
-@keyframes slideInRight {
-    from {
-        transform: translateX(100%);
-    }
-    to {
-        transform: translateX(0);
-    }
+.fade.ng-enter,
+.fade.ng-leave {
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
 }
-
-@keyframes dimIn {
-    from {
-
-    }
+.fade.ng-enter {
+    opacity: 0;
 }
-
-.view-frame {
-    position: fixed;
-    overflow: scroll;
-    width: 100vw;
-    height: 100vh;
+.fade.ng-enter-active {
+    opacity: 1;
 }
-
-.ng-enter {
-    z-index: 9999;
+.fade.ng-leave {
+    opacity: 1;
 }
-
-.ng-leave {
-    z-index: 1;
-}
-
-/* page specific animations ------------------------ */
-
-/* about ------------------------ */
-.view-frame.ng-enter {
-    animation: slideInRight 0.5s both cubic-bezier(.13, .64, .15, .99);
-}
-
-.view-frame.ng-leave {
-    animation: slideOutLeft 0.5s both cubic-bezier(.13, .64, .15, .99);
+.fade.ng-leave-active {
+    opacity: 0;
 }
