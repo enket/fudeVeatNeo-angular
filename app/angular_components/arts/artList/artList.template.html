@@ -69,18 +69,23 @@
                 angular-grid-id="shots"
                 scroll-container="'#content-scroller'"
         >
-            <!--<div class="card" ng-repeat="i in ['erondu', 'mikael', 'dustinlee', 'ugmonk', 'morgansessions', 'florianklauer', 'firmbee', 'jaymantri', 'matthewhenry']">-->
-            <!--<img src="assets/img/bg.jpg">-->
-            <!--<div class="inside">-->
-            <!--<h3>title</h3>-->
-            <!--<div class="description">description</div>-->
-            <!--</div>-->
-            <!--</div>-->
+            <!--<div class="card"-->
+            <!--ng-repeat="i in ['erondu', 'mikael', 'dustinlee', 'ugmonk', 'morgansessions', 'florianklauer', 'firmbee', 'jaymantri', 'matthewhenry']">-->
+            <div class="card"
+                 ng-repeat="i in ['erondu']">
+                <img src="assets/img/bg.jpg">
+                <div class="inside">
+                    <h3>title</h3>
+                    <div class="description">description</div>
+                </div>
+            </div>
             <div class="card" ng-repeat="art in arts">
                 <img ng-src="assets/img/bg.jpg">
                 <div class="inside">
                     <h3>{{ art.title }}</h3>
-                    <div class="description">{{ art.description }}</div>
+                    <div class="description">{{ art.description }}
+                        <a ng-href="#!/arts/{{ art._id }}">link</a>
+                    </div>
                 </div>
             </div>
         </div>

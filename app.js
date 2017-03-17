@@ -150,7 +150,7 @@ router.route('/arts/:artId')
             if (err)
                 res.send(err);
             res.json(art);
-        });
+        }).select('-img');
     })
 
     .delete(function (req, res) {

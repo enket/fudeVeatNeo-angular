@@ -275,7 +275,7 @@ angular.module('canvasDrawing').component('canvasDrawing', {
                     delta = size / 2;
                     x = x + angleSin;
                     y = y + angleCos;
-                    $scope.canvasBgCtx.drawImage($scope.brushImg, x - delta, y - delta, size, size);
+                    $scope.canvasBgCtx.drawImage($scope.brushImgGray, x - delta, y - delta, size, size);
                     i = (i + 1) | 0;
                 }
             };

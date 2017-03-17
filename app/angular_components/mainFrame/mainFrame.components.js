@@ -28,7 +28,8 @@ angular.module('mainFrame').component('mainFrame', {
                     .targetEvent(ev)
             ).then(function () {
                 $('.canvas-main').get(0).toBlob(function (blob) {
-                    socket.emit('saveArt', $scope.sharedCanvasObject, blob);
+                    // socket.emit('saveArt', $scope.sharedCanvasObject, blob);
+                    socket.emit('saveArt', $scope.sharedCanvasObject, "");
                 });
             }, function () {
                 $('.canvas-main').get(0).toBlob(function (blob) {
