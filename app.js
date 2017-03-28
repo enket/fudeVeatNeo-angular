@@ -9,8 +9,9 @@ var io = require('socket.io')(http);
 var bodyParser = require('body-parser');
 
 //DB接続
+var MONGO_URL = process.env.MONGOHQ_URL || 'mongodb://localhost/jsonAPI';
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/jsonAPI');
+mongoose.connect(MONGO_URL);
 
 //モデルの宣言
 var User = require('./models/user');
@@ -277,6 +278,7 @@ io.sockets.on('connection', function (socket) {
     })
 });
 
-http.listen(3000, function () {
+var port = process.env.PORT || 3000;
+http.listen(port, function () {
     console.log('listening on *:3000');
 });
