@@ -9,9 +9,9 @@ var io = require('socket.io')(http);
 var bodyParser = require('body-parser');
 
 //DB接続
-var MONGO_URL = process.env.MONGOHQ_URL || 'mongodb://localhost/jsonAPI';
+var MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/jsonAPI';
 var mongoose = require('mongoose');
-mongoose.connect(MONGO_URL);
+mongoose.connect(MONGODB_URI);
 
 //モデルの宣言
 var User = require('./models/user');
