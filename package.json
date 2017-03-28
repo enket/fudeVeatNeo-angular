@@ -37,6 +37,7 @@
     "express": "^4.10.2",
     "mongodb": "^2.2.21",
     "mongoose": "^4.7.7",
-    "socket.io": "^1.7.2"
+    "socket.io": "^1.7.2",
+    "bower": "1.4.1"
   }
 }
